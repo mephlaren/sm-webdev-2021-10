@@ -1,0 +1,33 @@
+/*
+    Többsoros komment
+    Második komment
+*/
+h5 {
+    color: #8732A8;
+    font-size: 36px;
+    margin: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+ul {
+    background-color: black;
+}
+
+/* ID-k díszítése */
+#fura1 {
+    color: #A52A2A;
+}
+#fura2 {
+    color: #FF7F50;
+}
+
+/* class-ok díszítése */
+.elso {
+    color: #00BFFF;
+}
+.masodik {
+    color: #FF00FF;
+}
+.betutipus {
+    font-family: monospace;
+}

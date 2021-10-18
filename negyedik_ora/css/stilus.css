@@ -1,0 +1,9 @@
+.b {
+    border: 1px solid black;
+}
+
+.custom-btn {
+    position: absolute;
+    right: 50px;
+    margin-top: 16px;
+}

@@ -1,0 +1,29 @@
+ul {
+    list-style: none;
+}
+
+.container {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.flex-1, .flex-2, .flex-3 {
+    height: 100px;
+    width: 100px;
+    background-color: blue;
+    border: 10px solid yellow;
+    margin: 5px;
+    padding: 10px;
+}
+
+.flex-1, .flex-3 {
+    width: 5%;
+    height: 200px;
+}
+
+.flex-2 {
+    width: 80%;
+    height: 200px;
+    overflow-y: scroll;
+}

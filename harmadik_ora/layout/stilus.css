@@ -1,0 +1,33 @@
+body {
+    background-image: url("https://www.photos-public-domain.com/wp-content/uploads/2018/08/wood-grain-texture.jpg")
+}
+
+#container {
+
+}
+
+.b {
+    border: 1px solid black;
+}
+
+.felso, .kozep, .also {
+    position: relative;
+    width: 150px;
+    height:50px;
+}
+
+.felso {
+    /* top left right bottom */
+    top: 50px;
+    left: 151px;
+}
+
+.kozep {
+    top: 100px;
+    left: 301px;
+}
+
+.also {
+    top: 150px;
+    left: 451px;
+}
