@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block kapcsolat %}
+
+    <h3>
+        Kedves {{name}}<br><br>
+        Sikeresen továbbítottuk az üzenetet.<br>
+        Kollegáink hamarosan keresik Önt a
+        <i>{{email}}</i> címen az üzenetével kapcsolatban
+    </h3>
+    <br><br>
+    <strong>Az ön által küldött üzenet:</strong> <br>
+    <p style="font-size: 16px;color:darkgrey;">{{msg}}</p>
+
+    {% if source %}
+    <br>
+    <p>A {{source}} segítségével készült.</p>
+    {% endif %}
+
+{% endblock kapcsolat %}

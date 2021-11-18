@@ -1,0 +1,17 @@
+body
+{
+    background-color: lightblue;
+    font-size: 14px;
+}
+.sarga-keret
+{
+    border: 1px solid yellow;
+}
+.piros-szoveg
+{
+    color: red;
+}
+.fekete-szoveg
+{
+    color:black;
+}

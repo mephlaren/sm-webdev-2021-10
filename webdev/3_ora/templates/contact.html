@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block kapcsolat %}
+    <form method="post" action="/feldolgoz">
+
+        {% if name %}
+            <input type="text" name="ugyfel_neve" value={{name}}>
+        {% else %}
+            <input type="text" name="ugyfel_neve" placeholder="Név">
+        {% endif %}
+        <br>
+        {% if email %}
+            <input type="text" name="ugyfel_email" value={{email}}>
+        {% else %}
+            <input type="text" name="ugyfel_email" placeholder="email@email.hu">
+        {% endif %}
+        <br>
+        <textarea name="uzenet" placeholder="Üzenet...">
+        </textarea>
+        <br>
+        <button type="submit">Elküldöm</button>
+    </form>
+{% endblock kapcsolat %}

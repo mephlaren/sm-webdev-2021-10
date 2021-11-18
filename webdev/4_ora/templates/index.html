@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guess the Secret Number</title>
+</head>
+<body>
+    <h3>Melyik számra gondoltam {{min}} és {{max}} között?</h3>
+    <form method="post" action="/result">
+        <input name="gtsn_name" type="text"
+                placeholder="Neved?">
+        <br>
+        <input name="gtsn_tipp" type="text"
+                placeholder="Mi lehet a titkos szám?">
+        <br>
+        <br><hr>
+        <button type="submit">Tippelek</button>
+    </form>
+
+
+</body>
+</html>
