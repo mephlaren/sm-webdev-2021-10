@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <div class="wrapper">
+        <span class="title-text"> Guess the secret number</span>
+        <div class="main-text">Kérlek, válassz nehézséget!</div>
+
+        <form method="post" action="/game">
+            <label class="checkbox-container">Könnyű
+                <input name="nehezseg" type="checkbox" value="0">
+                <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container">Közepes
+                <input name="nehezseg" type="checkbox" value="1">
+                <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container">Nehéz
+                <input name="nehezseg" type="checkbox" value="2">
+                <span class="checkmark"></span>
+            </label>
+
+            <div class="button-container">
+                <button type="submit">Mehet!</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock main %}

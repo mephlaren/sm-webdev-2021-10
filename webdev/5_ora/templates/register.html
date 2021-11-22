@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block main %}
+
+    <div class="wrapper">
+        <span class="title-text">REGISZTRÁCIÓ</span>
+        <form method="POST" action="/register">
+            <input class="input-text" type="text" name="user-name" placeholder="Játékos neve..">
+            <br>
+            <input class="input-text" type="text" name="user-email" placeholder="Játékos e-mail címe">
+            <br>
+            <input class="input-text" type="password" name="user-pw" placeholder="Jelszó">
+            <br>
+            <button>Mehet</button>
+        </form>
+    </div>
+
+{% endblock main %}

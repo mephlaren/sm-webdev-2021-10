@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <div class="wrapper">
+        <span class="title-text">BEJELENTKEZÉS</span>
+        <form method="post" action="/login">
+            <input class="input-text" type="text" name="user-name" placeholder="User név">
+            <br>
+            <input class="input-text" type="password" name="user-pw" placeholder="Jelszó">
+            <br>
+            <button>Mehet</button>
+        </form>
+        <a href="/new">Nincs fiókom :(</a>
+    </div>
+{% endblock main %}
