@@ -83,6 +83,10 @@ a
     cursor:pointer;
     font-size: 20px;
     margin:30px;
+    user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    -moz-user-select:none;
 
 }
 
@@ -129,6 +133,12 @@ a
 .checkbox-container input:checked ~ .checkmark:after
 {
     display:block;
+}
+.checkmark:after
+{
+    content:"";
+    position:absolute;
+    display: none;
 }
 
 

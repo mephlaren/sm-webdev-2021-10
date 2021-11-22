@@ -63,6 +63,42 @@ def start():
     except:
         return redirect("/")
 
+@app.route("/game", methods=["POST", "GET"])
+def game():
+    # mindegy hányat jelöl be, ha több lesz mindig a legkönnyebbel indítunk játékot.
+    error = None
+    if session.get('logged_in') == True:
+        difficulty = None
+        try:
+            difficulty = request.form.getlist('nehezseg')[0]
+            session['nehezseg'] = difficulty
+        except:
+            pass
+
+        calc_range = difficulties[difficulty]
+        actual_secret = None
+        if session.get('secret-number'):
+            actual_secret = session['secret-number']
+
+        resp = make_response(render_template("game.html",
+                                              error=error,
+                                              nehezseg=difficulties_names[difficulty]))
+
+        if actual_secret is None or difficulty != session.get('nehezseg'):
+            secret_number = r.randint(calc_range[0], calc_range[1])
+            session['secret_number'] = str(secret_number)
+            session['difficulty'] = difficulty
+        return resp
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/result", methods=["POST", "GET"])
+def result():
+    guess = int(request.form.get("guess_data"))
+    secret_number = int(session['secret_number'])
+    print(f"guess: {guess}, secret_number: {secret_number}")
+    return "Teszt"
+
 # CRUD függvények: create, read, update, delete
 def create_user(name,password, email):
     hash_pw = hash(password)
