@@ -110,20 +110,37 @@ def result():
    except:
        return redirect(url_for('game', error=True))
 
+   if session.get('tipp') is None:
+       session['tipp'] = 0
+
+
    secret_number = int(session['secret_number'])
    print(session)
    if guess == secret_number:
+       session['tipp'] = session['tipp'] + 1
+       insert_victory(session['tipp'], session['difficulty'])
+
+       session['tipp'] = 0
+
        message = f"Talált, a titkos szám valóban {guess}!"
        return render_template("result.html", msg=message, win=True)
    elif guess < secret_number:
+       session['tipp'] = session['tipp'] + 1
        message = f"Sajnos a titkos szám nagyobb, mint {guess}"
        return render_template("result.html", msg=message)
    else:
+       session['tipp'] = session['tipp'] + 1
        message = f"Sajnos a titkos szám ksiebb, mint {guess}"
        return render_template("result.html", msg=message)
 
 
 # CRUD függvények: create, read, update, delete
+def insert_victory(tippek, nehezseg):
+    user = int(session['userid'])
+    trans = Pontok(tippek=tippek, nehezseg=nehezseg, user=user)
+    db.add(trans)
+    db.commit()
+
 def create_user(name,password, email):
     hash_pw = hash(password)
     add_user = User(name=name, email=email, password=hash_pw)
