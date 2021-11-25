@@ -118,7 +118,7 @@ def result():
    print(session)
    if guess == secret_number:
        session['tipp'] = session['tipp'] + 1
-       insert_victory(session['tipp'], session['difficulty'])
+       insert_victory(session['tipp'], session['nehezseg'])
 
        session['tipp'] = 0
 
@@ -133,8 +133,48 @@ def result():
        message = f"Sajnos a titkos szám ksiebb, mint {guess}"
        return render_template("result.html", msg=message)
 
+@app.route('/stats')
+def getStats():
+    statbuilder = {}
+    users = get_all_user_stats()
+    for s_user in users:
+        user = s_user[0]
+        pont = s_user[1]
+        if user.name in statbuilder:
+            statbuilder[user.name].append({'pontok':1,'tipp': pont.tippek, 'nehezseg': pont.nehezseg})
+        else:
+            statbuilder[user.name] = []
+    print(statbuilder)
+    stats = statBuilder(statbuilder)
+    print(stats)
+    return render_template("stats.html", data=stats)
+
+def statBuilder(stats):
+    users = {}
+
+    for stat in stats:
+        users[stat] = {}
+
+    for ustat in stats:
+        tmp_stat = stats[ustat]
+        ret_stat = {}
+        for v in tmp_stat:
+            nehezseg = v['nehezseg']
+            nehezseg_lv = difficulties_names[nehezseg]
+            if nehezseg_lv in ret_stat:
+                ret_stat[nehezseg_lv] = ret_stat[nehezseg_lv]+1
+            else:
+                ret_stat[nehezseg_lv] = 1
+        users[ustat] = ret_stat
+
+    return users
+
 
 # CRUD függvények: create, read, update, delete
+def get_all_user_stats():
+    stats = db.query(User, Pontok).filter(Pontok.user==User.id)
+    return stats
+
 def insert_victory(tippek, nehezseg):
     user = int(session['userid'])
     trans = Pontok(tippek=tippek, nehezseg=nehezseg, user=user)
