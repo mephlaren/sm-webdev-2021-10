@@ -137,11 +137,14 @@ def result():
 def getStats():
     statbuilder = {}
     users = get_all_user_stats()
+    #végigmegyünk az eredményen ami egy két elemü tuple: az első a user tábla adatai, a második a pontok tábláé
     for s_user in users:
         user = s_user[0]
         pont = s_user[1]
+        #ha a user neve benne van a statbuilderbe, akkor hozzáfűzzük az adatait
         if user.name in statbuilder:
             statbuilder[user.name].append({'pontok':1,'tipp': pont.tippek, 'nehezseg': pont.nehezseg})
+        #ha nincs benne, akkor kulcsként létrehozzuk
         else:
             statbuilder[user.name] = []
     print(statbuilder)
@@ -149,20 +152,26 @@ def getStats():
     print(stats)
     return render_template("stats.html", data=stats)
 
+#statBuilder: aggregáljuk a userek nyerési számait minden egyes nehézségen, hogy látjuk adott nehézségi szinteken hányszor nyertek
 def statBuilder(stats):
     users = {}
-
+    #létrehozzuk az usereket, mint kulcsokat
     for stat in stats:
         users[stat] = {}
-
+    #végigmegyünk a compiled statisztikákon
     for ustat in stats:
         tmp_stat = stats[ustat]
         ret_stat = {}
+        #a kiszedett useren átmegyünk
         for v in tmp_stat:
+            #megkeressük a nehézségi szintjének az id-ját
             nehezseg = v['nehezseg']
+            #majd a nehézségi szint friendly namejét
             nehezseg_lv = difficulties_names[nehezseg]
+            #ha már szerepel ez a nehézség, akkor hozzáadunk 1-et az értékéhez
             if nehezseg_lv in ret_stat:
                 ret_stat[nehezseg_lv] = ret_stat[nehezseg_lv]+1
+            #ha nem létezik, létrehozzuk
             else:
                 ret_stat[nehezseg_lv] = 1
         users[ustat] = ret_stat
