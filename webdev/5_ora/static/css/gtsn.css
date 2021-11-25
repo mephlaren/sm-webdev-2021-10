@@ -52,6 +52,11 @@ a
     transform: translate(-50%, 0%);
 }
 
+.message
+{
+    font-size: 38px;
+}
+
 .title-text
 {
     position: absolute;

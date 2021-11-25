@@ -66,25 +66,35 @@ def start():
 @app.route("/game", methods=["POST", "GET"])
 def game():
     # mindegy hányat jelöl be, ha több lesz mindig a legkönnyebbel indítunk játékot.
-    error = None
+    new_game = False
+    if request.args.get('newGame') is not None:
+        new_game = True
+
     if session.get('logged_in') == True:
+        #ternary operator
+        error = True if request.args.get('error') is not None else False
         difficulty = None
         try:
             difficulty = request.form.getlist('nehezseg')[0]
             session['nehezseg'] = difficulty
         except:
-            pass
+            if session.get('nehezseg'):
+                if session['nehezseg'] != None:
+                    difficulty = session['nehezseg']
+            else:
+                redirect(url_for('start'))
 
+        print(difficulty)
         calc_range = difficulties[difficulty]
         actual_secret = None
-        if session.get('secret-number'):
-            actual_secret = session['secret-number']
+        if session.get('secret_number'):
+            actual_secret = session['secret_number']
 
         resp = make_response(render_template("game.html",
                                               error=error,
                                               nehezseg=difficulties_names[difficulty]))
 
-        if actual_secret is None or difficulty != session.get('nehezseg'):
+        if new_game is True or actual_secret is None or difficulty != session.get('nehezseg'):
             secret_number = r.randint(calc_range[0], calc_range[1])
             session['secret_number'] = str(secret_number)
             session['difficulty'] = difficulty
@@ -94,10 +104,24 @@ def game():
 
 @app.route("/result", methods=["POST", "GET"])
 def result():
-    guess = int(request.form.get("guess_data"))
-    secret_number = int(session['secret_number'])
-    print(f"guess: {guess}, secret_number: {secret_number}")
-    return "Teszt"
+   guess = None
+   try:
+       guess = int(request.form.get("guess_data"))
+   except:
+       return redirect(url_for('game', error=True))
+
+   secret_number = int(session['secret_number'])
+   print(session)
+   if guess == secret_number:
+       message = f"Talált, a titkos szám valóban {guess}!"
+       return render_template("result.html", msg=message, win=True)
+   elif guess < secret_number:
+       message = f"Sajnos a titkos szám nagyobb, mint {guess}"
+       return render_template("result.html", msg=message)
+   else:
+       message = f"Sajnos a titkos szám ksiebb, mint {guess}"
+       return render_template("result.html", msg=message)
+
 
 # CRUD függvények: create, read, update, delete
 def create_user(name,password, email):
